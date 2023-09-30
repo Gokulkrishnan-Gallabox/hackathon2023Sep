@@ -34,8 +34,14 @@ const formSchema = z.object({
   language: z.string(),
 });
 
-const CreateTemplateForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+interface CreateTemplateFormProps {
+  onSubmit:(value:CreateTemplateFormType) => void
+}
+
+export type CreateTemplateFormType = z.infer<typeof formSchema>
+
+const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
+  const form = useForm<CreateTemplateFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       bioOfCompany: "",
@@ -46,11 +52,7 @@ const CreateTemplateForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  
 
   return (
     <div className="w-full lg:w-1/2 lg:flex  lg:flex-col lg:gap-8  lg:py-16'">

@@ -61,7 +61,7 @@ const handleSubmit =async (data:CreateTemplateFormType) => {
 
 
   return (
-    <main className="container flex min-h-screen flex-col items-center">
+    <main className="container flex min-h-screen flex-col items-center py-24">
       <Image src={Logo} alt="ai_icon" width="200" height="160" />
       <p>AI WhatsApp Template Generator</p>
       <div className=" w-full flex justify-center items-center lg:flex-col gap-8">

@@ -53,8 +53,9 @@ const CreateTemplateForm = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <div className="w-full lg:w-1/2 lg:flex  lg:flex-col lg:gap-8  lg:py-16'">
+    <Form {...form} >
+      <form  onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="bioOfCompany"
@@ -62,7 +63,7 @@ const CreateTemplateForm = () => {
             <FormItem>
               <FormLabel>Bio of you company</FormLabel>
               <FormControl>
-                <Textarea placeholder="shadcn" {...field} />
+                <Textarea placeholder="Enter Bio of your Company" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -148,7 +149,6 @@ const CreateTemplateForm = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="language"
@@ -179,6 +179,7 @@ const CreateTemplateForm = () => {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    </div>
   );
 };
 

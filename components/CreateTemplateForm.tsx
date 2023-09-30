@@ -26,13 +26,13 @@ import {
 import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-  bioOfCompany: z.string().min(10).max(500),
-  businessName: z.string().min(10).max(500),
-  topic: z.string(),
+  bioOfCompany: z.string().min(8).max(500),
+  businessName: z.string().min(5).max(500),
+  topic: z.string().min(5).max(200),
   tone: z.enum(["professional", "formal", "humour", "creative", "minimal"], {
     required_error: "You need to select a notification type.",
   }),
-  language: z.string(),
+  language: z.string().nonempty("This field is Required"),
 });
 
 interface CreateTemplateFormProps {
@@ -43,11 +43,14 @@ export type CreateTemplateFormType = z.infer<typeof formSchema>
 
 const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({handleSubmit}) => {
   const [isLoading,setLoading] =React.useState<boolean>(false)
+  const getStorage = localStorage.getItem("templateBio")
+  const {bioOfCompany,businessName} = typeof getStorage === "string" && JSON.parse(getStorage)
+
   const form = useForm<CreateTemplateFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      bioOfCompany: "",
-      businessName: "",
+      bioOfCompany: bioOfCompany ?? "",
+      businessName: businessName ?? "",
       topic: "",
       tone: "professional",
       language: "",
@@ -189,7 +192,7 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({handleSubmit}) =>
         <div className="lg:w-full flex justify-center items-center" >
        {isLoading ? <Button  className="w-60" disabled>
       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Loading
+          Generating Template
     </Button> :<Button className="w-60"type="submit">Create Template</Button> }
     </div>
       </form>

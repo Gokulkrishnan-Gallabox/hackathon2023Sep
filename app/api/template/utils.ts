@@ -2,7 +2,7 @@ import { TemplateRequest } from "./types";
 
 export const getPromt = (body: TemplateRequest) => {
   const { bioOfCompany, businessName, language, tone, topic } = body;
-  const aiPrompt = `Imagine you are a senior content writer. You are writing a WhatsApp template for ${businessName} they ${bioOfCompany}.** Write a short WhatsApp template about **${topic}** in **${language}.** The tone can be **${tone}.**
+  const aiPrompt = `Imagine you are a senior content writer. You are writing a WhatsApp template for ${businessName} they ${bioOfCompany}.** Write a short WhatsApp template about **${topic}** in **${language}.** The tone must be **${tone}.**
    
     **Fields to fill in WhatsApp template** 
     

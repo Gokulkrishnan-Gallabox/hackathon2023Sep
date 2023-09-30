@@ -4,6 +4,7 @@ import TemplatePreview from "@/components/TemplatePreview";
 import Image from "next/image";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton"
+import  Logo from "@/public/logo_ai.png"
 
 
 
@@ -44,6 +45,7 @@ export default function Home() {
  
 
 const handleSubmit =async (data:CreateTemplateFormType) => {
+   localStorage.setItem("templateBio", JSON.stringify(data))
   setData(null);
   const response = await fetch("/api/template",{
     method:"POST",
@@ -53,17 +55,18 @@ const handleSubmit =async (data:CreateTemplateFormType) => {
     },
   })
   const res =await response.json();
-  setData(res)
+  setData(JSON.parse(res))
 }
 
-console.log(data);
+
 
   return (
-    <main className="container flex min-h-screen flex-col items-center  p-24">
+    <main className="container flex min-h-screen flex-col items-center">
+      <Image src={Logo} alt="ai_icon" width="200" height="160" />
       <p>AI WhatsApp Template Generator</p>
       <div className=" w-full flex justify-center items-center lg:flex-col gap-8">
         <CreateTemplateForm handleSubmit={handleSubmit} />
-      {!!data && <TemplatePreview data={data as TemplateResponse}/> }
+      {!!data && <TemplatePreview data={data}/> }
        </div>
     </main>
   );

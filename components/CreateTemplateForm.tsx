@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   bioOfCompany: z.string().min(10).max(500),
@@ -35,12 +36,13 @@ const formSchema = z.object({
 });
 
 interface CreateTemplateFormProps {
-  onSubmit:(value:CreateTemplateFormType) => void
+  handleSubmit:(value:CreateTemplateFormType) => Promise<void>
 }
 
 export type CreateTemplateFormType = z.infer<typeof formSchema>
 
-const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
+const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({handleSubmit}) => {
+  const [isLoading,setLoading] =React.useState<boolean>(false)
   const form = useForm<CreateTemplateFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,6 +53,14 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
       language: "",
     },
   });
+
+
+  const  onSubmit =async (data:CreateTemplateFormType) => {
+    setLoading(true);
+    await handleSubmit(data)
+    setLoading(false)
+  
+  }
 
   
 
@@ -108,7 +118,7 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tone</FormLabel>
-              <FormControl>
+              <FormControl className="flex lg:flex-row">
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -146,7 +156,6 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
                   </FormItem>
                 </RadioGroup>
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -155,7 +164,7 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
           control={form.control}
           name="language"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="lg:w-48">
               <FormLabel>Language</FormLabel>
               <FormControl>
                 <Select
@@ -173,12 +182,16 @@ const CreateTemplateForm:React.FC<CreateTemplateFormProps> = ({onSubmit}) => {
                   </SelectContent>
                 </Select>
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="lg:w-full flex justify-center items-center" >
+       {isLoading ? <Button  className="w-60" disabled>
+      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Loading
+    </Button> :<Button className="w-60"type="submit">Create Template</Button> }
+    </div>
       </form>
     </Form>
     </div>

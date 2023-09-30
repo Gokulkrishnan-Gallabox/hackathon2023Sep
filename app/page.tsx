@@ -14,7 +14,7 @@ export interface TemplateResponse {
   header: Header
   body: string
   footer: string
-  button: Button
+  buttons: Buttons
 }
 
 export interface Header {
@@ -22,11 +22,18 @@ export interface Header {
   text: string
 }
 
+export interface Buttons {
+  type: string
+  buttons: Button[]
+}
+
 export interface Button {
   type: string
   text: string
-  url: string
+  url?: string
+  phone_number?: string
 }
+
 
 
 export default function Home() {
